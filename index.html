@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>DocBox by Ortus-Solutions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">DocBox</h1>
+      <h2 class="project-tagline">DocBox is a tool that has been built to generate documentation based on ColdFusion (CFML) Component Meta Data.</h2>
+      <a href="https://github.com/Ortus-Solutions/DocBox" class="btn">View on GitHub</a>
+      <a href="https://github.com/Ortus-Solutions/DocBox/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/Ortus-Solutions/DocBox/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <pre><code>██████╗  ██████╗  ██████╗██████╗  ██████╗ ██╗  ██╗
+██╔══██╗██╔═══██╗██╔════╝██╔══██╗██╔═══██╗╚██╗██╔╝
+██║  ██║██║   ██║██║     ██████╔╝██║   ██║ ╚███╔╝ 
+██║  ██║██║   ██║██║     ██╔══██╗██║   ██║ ██╔██╗ 
+██████╔╝╚██████╔╝╚██████╗██████╔╝╚██████╔╝██╔╝ ██╗
+╚═════╝  ╚═════╝  ╚═════╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝
+</code></pre>
+
+<h1>
+<a id="welcome-to-docbox-v200" class="anchor" href="#welcome-to-docbox-v200" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to DocBox v2.0.0!</h1>
+
+<p>DocBox is a fork of the ColdDoc project originally created by Mark Mandel.  Documentation for DocBox can be found on the <a href="https://github.com/Ortus-Solutions/DocBox/wiki">GitHub Wiki</a> and in this Readme. The main Git repository and downloads can be found on <a href="https://github.com/Ortus-Solutions/DocBox">GitHub</a>.</p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>LICENSE</h2>
+
+<p>Apache License, Version 2.0.</p>
+
+<h2>
+<a id="system-requirements" class="anchor" href="#system-requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>SYSTEM REQUIREMENTS</h2>
+
+<ul>
+<li>Lucee 4.5+</li>
+<li>ColdFusion 10+</li>
+</ul>
+
+<h2>
+<a id="instructions" class="anchor" href="#instructions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Instructions</h2>
+
+<p>You can use DocBox as a standalone application or install it as a CommandBox command via CommandBox: <code>box install docbox</code>.  </p>
+
+<h3>
+<a id="standalone-application" class="anchor" href="#standalone-application" aria-hidden="true"><span class="octicon octicon-link"></span></a>Standalone Application</h3>
+
+<p>If you want to use DocBox for document generation in your CFML application, then just drop it into any location and create a <code>/docbox</code> mapping to it.  You will then instantiate the <code>DocBox</code> generator class with a <code>strategy</code> and <code>properties</code> for the strategy.</p>
+
+<div class="highlight highlight-js"><pre><span class="pl-c">// signature</span>
+docbox <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">DocBox</span>( strategy<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>class.path<span class="pl-pds">"</span></span>, properties<span class="pl-k">=</span>{} );
+
+<span class="pl-c">// create with default strategy</span>
+docbox <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">DocBox</span>( properties <span class="pl-k">=</span> { 
+    projectTitle<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>My Docs<span class="pl-pds">"</span></span>, 
+    outputDir<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>#expandPath( '/docs' )#<span class="pl-pds">"</span></span>
+});</pre></div>
+
+<h4>
+<a id="generating-docs" class="anchor" href="#generating-docs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Generating Docs</h4>
+
+<p>To generate the documentation you will then execute the <code>generate()</code> method on the DocBox object and pass in the following parameters:</p>
+
+<h4>
+<a id="generate-params" class="anchor" href="#generate-params" aria-hidden="true"><span class="octicon octicon-link"></span></a>Generate Params</h4>
+
+<ul>
+<li>
+<code>source</code> : A path to the source location or an array of structs of locations that must have a <code>dir</code> and <code>mapping</code> key on it.</li>
+<li>
+<code>mapping</code> : The base mapping for the folder source. Used only if <code>source</code> is a path</li>
+<li>
+<code>excludes</code> : A regular expression that will be evaluated against all CFCs sent for documentation.  If the regex matches the CFC name and path then the CFC will be excluded from documentation.</li>
+</ul>
+
+<div class="highlight highlight-js"><pre>docbox.generate( source<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>/my/path<span class="pl-pds">"</span></span>, mapping<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>coldbox<span class="pl-pds">"</span></span> );
+
+docbox.generate(
+    source  <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>#expandPath( '/docbox' )<span class="pl-pds">"</span></span>,
+    mapping <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>coldbox<span class="pl-pds">"</span></span>,
+    excludes <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>tests<span class="pl-pds">"</span></span>
+);</pre></div>
+
+<p>Once the generation finalizes, you will see your beautiful docs!</p>
+
+<h4>
+<a id="available-strategies--properties" class="anchor" href="#available-strategies--properties" aria-hidden="true"><span class="octicon octicon-link"></span></a>Available Strategies &amp; Properties</h4>
+
+<ul>
+<li>
+<code>docbox.strategy.api.HTMLAPIStrategy</code> - <strong>default</strong>
+
+<ul>
+<li>
+<code>projectTitle</code> : The HTML title</li>
+<li>
+<code>outputDir</code> : The output directory</li>
+</ul>
+</li>
+<li>
+<code>docbox.strategy.uml2tools.XMIStrategy</code>
+
+<ul>
+<li>
+<code>outputFile</code> : The output file</li>
+</ul>
+</li>
+</ul>
+
+<h3>
+<a id="commandbox-command" class="anchor" href="#commandbox-command" aria-hidden="true"><span class="octicon octicon-link"></span></a>CommandBox Command</h3>
+
+<p>If installed as a command you will get a new namespace called <strong>docbox</strong> with a <strong>Generate</strong> command.  Type <code>docbox generate help</code> to see its usage, which is very similar to the instructions above.</p>
+
+<hr>
+
+<h1>
+<a id="credits--contributions" class="anchor" href="#credits--contributions" aria-hidden="true"><span class="octicon octicon-link"></span></a>CREDITS &amp; CONTRIBUTIONS</h1>
+
+<p>Thanks to Mark Mandel for allowing us to fork his project.</p>
+
+<p>I THANK GOD FOR HIS WISDOM FOR THIS PROJECT</p>
+
+<h2>
+<a id="the-daily-bread" class="anchor" href="#the-daily-bread" aria-hidden="true"><span class="octicon octicon-link"></span></a>THE DAILY BREAD</h2>
+
+<p>"I am the way, and the truth, and the life; no one comes to the Father, but by me (JESUS)" Jn 14:1-12</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/Ortus-Solutions/DocBox">DocBox</a> is maintained by <a href="https://github.com/Ortus-Solutions">Ortus-Solutions</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
+
