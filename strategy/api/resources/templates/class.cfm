@@ -154,7 +154,7 @@ Class
 
 <cfif StructKeyExists(arguments.metadata, "hint")>
 <div id="class-hint">
-	<p>#arguments.metadata.hint#</p>
+	<p>#formatLineBreaks( arguments.metadata.hint )#</p>
 </div>
 </cfif>
 
@@ -396,7 +396,7 @@ Class
 	<br><br>
 
 	<cfif StructKeyExists(local.init, "hint")>
-	<p>#local.init.hint#</p>
+	<p>#formatLineBreaks( local.init.hint )#</p>
 	</cfif>
 
 	<cfif StructKeyExists(local.init, "parameters") AND ArrayLen(local.init.parameters)>
@@ -436,7 +436,7 @@ Class
 
 		<br><br>
 		<cfif StructKeyExists(local.prop, "hint") AND Len(local.prop.hint)>
-			<p>#local.prop.hint#</p>
+			<p>#formatLineBreaks( local.prop.hint )#</p>
 		</cfif>
 
 		<dl>
@@ -485,7 +485,7 @@ Class
 	<br><br>
 
 	<cfif StructKeyExists(local.func, "hint") AND Len(local.func.hint)>
-		<p>#local.func.hint#</p>
+		<p>#formatLineBreaks( local.func.hint )#</p>
 	</cfif>
 
 	<cfif StructKeyExists(local.func, "deprecated") AND isSimplevalue(local.func.deprecated)>
@@ -687,6 +687,28 @@ Class
 			return list;
 		}
 		*/
+
+		/**
+		 * Improved version of Ben Forta's "ParagraphFormat2" method on cflib.
+		 * 
+		 * @cite https://cflib.org/udf/ParagraphFormat2
+		 * @param string      The string to format. (Required)
+		 * @return Returns a string. 
+		 * @author Ben Forta (ben@forta.com) 
+		 * @version 3, June 26, 2002 
+		 */
+		function formatLineBreaks( string val ){
+			// first make Windows style into Unix style
+			val = replace(val,chr(13)&chr(10),chr(10),"ALL");
+			// now make Macintosh style into Unix style
+			val = replace(val,chr(13),chr(10),"ALL");
+			// tabs
+			val = replace(val,chr(9),"&nbsp;&nbsp;&nbsp;&nbsp;","ALL");
+			// double line breaks
+			val = replace(val,chr(10)&chr(10),"</p><p>","ALL");
+			// single line breaks
+			return replace(val,chr(10),"</p><p>","ALL");
+		}
 
 		function writeClassLink(package, name, qMetaData, format)
 		{
