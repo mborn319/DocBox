@@ -1,0 +1,41 @@
+{
+    "$id": "point-to-public-json-schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Package documentation index",
+    "description": "This class index links to each generated class documentation JSON file.",
+    "required": [],
+    "type": "object",
+    "properties": {
+        "title": {
+            "type": "string"
+        },
+        "classes": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "packages": {
+            "type": "object",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

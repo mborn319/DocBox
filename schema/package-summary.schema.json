@@ -1,0 +1,27 @@
+{
+    "$id": "point-to-public-json-schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Package documentation index",
+    "description": "Index file documenting each coldfusion component inside a package level - i.e. per directory.",
+    "required": [],
+    "type": "object",
+    "properties": {
+        "title": {
+            "type": "string"
+        },
+        "classes": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
