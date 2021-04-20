@@ -112,7 +112,10 @@ component accessors="true" {
 	){
 		// verify we have at least one strategy defined, if not, auto add the HTML strategy
 		if ( isNull( getStrategies() ) || !getStrategies().len() ) {
-			this.addStrategy( strategy : "HTML", properties : variables.properties );
+			this.addStrategy(
+				strategy  : "HTML",
+				properties: variables.properties
+			);
 		}
 
 		// inflate the incoming input and mappings

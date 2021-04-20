@@ -41,16 +41,18 @@ component extends="testbox.system.BaseSpec" {
 			} );
 
 			it( "defaults to HTML if no strategy is set", function(){
-				variables.docbox.init(
-					properties = {
-						projectTitle = "Test", outputDir = variables.HTMLOutputDir
-					}
-				)
-				.generate(
-					source   = expandPath( "/tests" ),
-					mapping  = "tests",
-					excludes = "(coldbox|build\-docbox)"
-				);
+				variables.docbox
+					.init(
+						properties = {
+							projectTitle : "Test",
+							outputDir    : variables.HTMLOutputDir
+						}
+					)
+					.generate(
+						source   = expandPath( "/tests" ),
+						mapping  = "tests",
+						excludes = "(coldbox|build\-docbox)"
+					);
 				expect( variables.docbox.getStrategies() ).notTobeEmpty();
 			} );
 
