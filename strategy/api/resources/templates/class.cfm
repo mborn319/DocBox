@@ -699,15 +699,15 @@ Class
 		 */
 		function formatLineBreaks( string val ){
 			// first make Windows style into Unix style
-			val = replace(val,chr(13)&chr(10),chr(10),"ALL");
+			arguments.val = replace(arguments.val,chr(13)&chr(10),chr(10),"ALL");
 			// now make Macintosh style into Unix style
-			val = replace(val,chr(13),chr(10),"ALL");
+			arguments.val = replace(arguments.val,chr(13),chr(10),"ALL");
 			// tabs
-			val = replace(val,chr(9),"&nbsp;&nbsp;&nbsp;&nbsp;","ALL");
+			arguments.val = replace(arguments.val,chr(9),"&nbsp;&nbsp;&nbsp;&nbsp;","ALL");
 			// double line breaks
-			val = replace(val,chr(10)&chr(10),"</p><p>","ALL");
+			arguments.val = replace(arguments.val,chr(10)&chr(10),"</p><p>","ALL");
 			// single line breaks
-			return replace(val,chr(10),"</p><p>","ALL");
+			return replace(arguments.val,chr(10),"</p><p>","ALL");
 		}
 
 		function writeClassLink(package, name, qMetaData, format)
